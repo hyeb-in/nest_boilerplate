@@ -4,11 +4,11 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { UserRepository } from '../repositories';
-import { LoginTokenDto } from '../dto';
 import { User } from '../entities';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { AuthResDto } from '../dto';
 
 @Injectable()
 export class AuthService {
@@ -18,7 +18,7 @@ export class AuthService {
     private readonly configService: ConfigService,
   ) {}
 
-  async login(email: string, password: string): Promise<LoginTokenDto> {
+  async login(email: string, password: string): Promise<AuthResDto> {
     // 1. 유저 확인
     const user = await this.validateUser(email, password);
     const payload = { sub: user.id };
